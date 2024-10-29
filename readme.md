@@ -22,9 +22,7 @@ Ensure you have Node.js and npm installed.
 ### Installation
 
 1. Clone the repository:
-
-`` git clone https://github.com/elledevelope/ifachat ``
-``cd ifachat`` 
+`` git clone https://github.com/elledevelope/ifachat `` ->  ``cd ifachat`` 
 
 2. Restore Node project:
 `git clone url` -> `npm update` -> `npm init`
@@ -38,12 +36,13 @@ Register as a new user or login if you already have an account.
 Type and format your message using the TinyMCE editor.
 Send your message and watch it appear instantly in the public chat room.
 
-<!-- ## Future Improvements 📚
-Private Messaging 🤫 - One-on-one messaging with users.
-User Avatars 🖼️ - Add avatars for a more personalized chat experience.
-Emojis & Reactions 👍 - React to messages with emojis.
-Message History 📜 - Store and retrieve past conversations.
-Security for User Connections 🔒 - Implement enhanced security features, such as HTTPS, token-based authentication, and data encryption. -->
+## Future Improvements 📚
+* Security for User Connections 🔒 - Implement enhanced security features, such as HTTPS, token-based authentication, and data encryption.
+* Private Messaging 🤫 - One-on-one messaging with users.
+* User Avatars 🖼️ - Add avatars for a more personalized chat experience.
+* Emojis & Reactions 👍 - React to messages with emojis.
+* Message History 📜 - Store and retrieve past conversations.
+
 
 ## Contributing 👨‍💻
 Feel free to fork this repository, create a new branch, and submit a pull request if you’d like to contribute. Contributions, feedback, and suggestions are always welcome! 🌟
@@ -51,6 +50,9 @@ Feel free to fork this repository, create a new branch, and submit a pull reques
 ## License 📜
 This project is open-source and available under the ISC License.
 
+## Author 👤
+
+- GitHub: [@elledevelope](https://github.com/elledevelope)
 __________________________
 
 Happy chatting! 🎉
