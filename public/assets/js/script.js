@@ -78,9 +78,28 @@ document.getElementById("sendPrivate").addEventListener("click", () => {
     tinyMCE.get("privateMessageText").setContent(""); // Clear TinyMCE content
 });
 
-// Receiving  incoming private messages :
+
+// Close popup overlay :
+document.getElementById("closePopup").addEventListener("click", () => {
+    document.getElementById("privateMessagePopup").style.display = "none"; // Close popup
+    tinyMCE.get("privateMessageText").setContent(""); // Clear TinyMCE content when closing
+});
+
+
+// Receiving incoming private messages :
 socket.on("receivePrivateMessage", (data) => {
-    alert(`New private message from ${data.pseudo}: ${data.messageContent}`);
+    const incomingMessagesDiv = document.getElementById("incomingMessages");
+    
+    // Create a new message element
+    const messageElement = document.createElement("div");
+    messageElement.classList.add("incoming-message"); // Add a class for styling if desired
+    messageElement.innerHTML = `<strong>${data.pseudo}</strong>: ${data.messageContent}`;
+    
+    // Append the new message to the incoming messages div
+    incomingMessagesDiv.appendChild(messageElement);
+    
+    // Optionally, ensure the popup is displayed when a new message arrives
+    document.getElementById("privateMessagePopup").style.display = "block";
 });
 
 ///////////////--------------------------- Receive the updated users list :
