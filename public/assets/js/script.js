@@ -89,16 +89,16 @@ document.getElementById("closePopup").addEventListener("click", () => {
 // Receiving incoming private messages :
 socket.on("receivePrivateMessage", (data) => {
     const incomingMessagesDiv = document.getElementById("incomingMessages");
-    
-    
+
+
     // Create a new message element
     const messageElement = document.createElement("div");
-    messageElement.classList.add("incoming-message"); 
+    messageElement.classList.add("incoming-message");
     messageElement.innerHTML = `<p><strong> You received DM from ${data.pseudo}</strong>: ${data.messageContent}</p>`;
-    
+
     // Append the new message to the incoming messages div
     incomingMessagesDiv.appendChild(messageElement);
-    
+
     // Optionally, ensure the popup is displayed when a new message arrives
     incomingMessagesDiv.style.display = "block";
 });
