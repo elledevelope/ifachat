@@ -1,4 +1,6 @@
- # Real-Time Chat App 💬
+> ! IMPORTANT : Le FOAD se trouve sur la branche `01-foad-30102024`.
+
+# Real-Time Chat App 💬
 Welcome to Real-Time Chat App! 🎉 This is a collaborative project developed during my CSI training. This app is a Node.js-based chat platform where users can register and send public messages to each other in real-time. Built with Node.js, Express, and TinyMCE for rich text editing, this chat app showcases core web development concepts and real-time messaging! 🚀
 
 <p align="center">
