@@ -21,6 +21,7 @@ const displayMessage = (data) => {
     </div>`
 };
 
+//----------- TinyMCE textPublic textarea
 tinymce.init({
     selector: '#textPublic',
     plugins: [
@@ -33,16 +34,54 @@ tinymce.init({
         'bullist numlist checklist outdent indent | removeformat | a11ycheck code table help'
 });
 
+//----------- TinyMCE privateMessageText textarea
+tinymce.init({
+    selector: '#privateMessageText',
+    plugins: [
+        'advlist', 'autolink', 'lists', 'link', 'charmap', 'preview', 'anchor',
+        'searchreplace', 'visualblocks', 'fullscreen', 'insertdatetime', 'media',
+        'table', 'help', 'wordcount'
+    ],
+    toolbar: 'undo redo | bold italic backcolor | alignleft aligncenter alignright | ' +
+        'bullist numlist | removeformat | help'
+});
+
+
+// Open a popup to send private messaging :
+const openPrivateMessagePopup = (recipient) => {
+    document.getElementById("privateRecipient").textContent = recipient;
+    document.getElementById("privateMessagePopup").style.display = "block";
+};
+
 ///////////////--------------------------- Users-currently-online-list : 
 const renderUserList = (users) => {
     userList.innerHTML = ""; // start with empty list of users
     users.forEach((user) => {
         const userElement = document.createElement("li");
         userElement.textContent = user.pseudo;
+        userElement.addEventListener("click", () => openPrivateMessagePopup(user.pseudo));
         userList.appendChild(userElement);
     });
     // console.log(users.pseudo);
 };
+
+
+///////////////--------------------------- send private msg :
+document.getElementById("sendPrivate").addEventListener("click", () => {
+    const recipient = document.getElementById("privateRecipient").textContent;
+    const messageContent = tinyMCE.get("privateMessageText").getContent();
+    const date = new Date();
+
+    const data = { recipient, pseudo, messageContent, date };
+    socket.emit("privateMessage", data); // Emit the private message to server
+    document.getElementById("privateMessagePopup").style.display = "none"; // Close popup
+    tinyMCE.get("privateMessageText").setContent(""); // Clear TinyMCE content
+});
+
+// Receiving  incoming private messages :
+socket.on("receivePrivateMessage", (data) => {
+    alert(`New private message from ${data.pseudo}: ${data.messageContent}`);
+});
 
 ///////////////--------------------------- Receive the updated users list :
 socket.on("updateUserList", (users) => {

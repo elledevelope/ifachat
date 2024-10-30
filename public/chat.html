@@ -23,6 +23,21 @@
         <ul id="userList"></ul>
     </section>
 
+    <!-- Private message Popup -->
+    <!-- <div id="privateMessagePopup" style="display: none;">
+        <h3>Send a private message to <span id="privateRecipient"></span></h3>
+        <textarea id="privateMessageText"></textarea>
+        <button id="sendPrivate">Send message</button>
+    </div> -->
+    <div id="privateMessagePopup" style="display: none;" class="pop-send">
+        <div class="pop-send-content">
+            <span class="close" id="closePopup">&times;</span>
+            <h3>Send a DM to <span id="privateRecipient"></span></h3>
+            <textarea id="privateMessageText"></textarea>
+            <button id="sendPrivate">Send</button>
+        </div>
+    </div>
+
     <!-- Chat -->
     <section id="saisiePublic">
         <h2>Chat with others :</h2>
