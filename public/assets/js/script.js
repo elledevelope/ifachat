@@ -90,16 +90,17 @@ document.getElementById("closePopup").addEventListener("click", () => {
 socket.on("receivePrivateMessage", (data) => {
     const incomingMessagesDiv = document.getElementById("incomingMessages");
     
+    
     // Create a new message element
     const messageElement = document.createElement("div");
-    messageElement.classList.add("incoming-message"); // Add a class for styling if desired
-    messageElement.innerHTML = `<strong>${data.pseudo}</strong>: ${data.messageContent}`;
+    messageElement.classList.add("incoming-message"); 
+    messageElement.innerHTML = `<p><strong> You received DM from ${data.pseudo}</strong>: ${data.messageContent}</p>`;
     
     // Append the new message to the incoming messages div
     incomingMessagesDiv.appendChild(messageElement);
     
     // Optionally, ensure the popup is displayed when a new message arrives
-    document.getElementById("privateMessagePopup").style.display = "block";
+    incomingMessagesDiv.style.display = "block";
 });
 
 ///////////////--------------------------- Receive the updated users list :

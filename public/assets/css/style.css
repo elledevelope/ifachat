@@ -44,3 +44,9 @@
     text-decoration: none;
     cursor: pointer;
 }
+
+.incoming-message {
+    margin-bottom: 10px;
+    max-height: 150px;
+    overflow-y: auto;
+}
