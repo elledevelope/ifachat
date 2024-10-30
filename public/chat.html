@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>chat</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.8.1/socket.io.min.js"
         integrity="sha512-8ExARjWWkIllMlNzVg7JKq9RKWPlJABQUNq6YvAjE/HobctjH/NA+bSiDMDvouBVjp4Wwnf1VP1OEv7Zgjtuxw=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -15,10 +17,10 @@
     <link rel="stylesheet" href="./assets/css/style.css">
 </head>
 
-<body>
+<body class="m-5">
 
     <!-- Users-currently-online-list -->
-    <section id="usersOnline">
+    <section id="usersOnline" class="mb-4">
         <h2>Currently online :</h2>
         <ul id="userList"></ul>
     </section>
@@ -31,27 +33,32 @@
 
 
             <!-- Message input area -->
-            <textarea id="privateMessageText" placeholder="Type your message here..."></textarea>
-            <button id="sendPrivate">Send</button>
+            <textarea id="privateMessageText" class="form-control mb-3"
+                placeholder="Type your message here..."></textarea>
+            <button id="sendPrivate" class="btn btn-primary m-2">Send</button>
         </div>
     </div>
 
     <!-- Incoming messages area -->
-    <div id="incomingMessages"></div>
+    <div id="incomingMessages" class="text-primary text-center"></div>
 
 
 
     <!-- Chat -->
-    <section id="saisiePublic">
+    <section id="saisiePublic" class="mb-4">
         <h2>Chat with others :</h2>
-        <textarea id="textPublic"></textarea>
-        <button id="sendPublic">SEND</button>
+        <textarea id="textPublic" class="form-control mb-3"></textarea>
+        <div class="text-center">
+            <button id="sendPublic" class="btn btn-primary m-2">SEND</button>
+        </div>
     </section>
-    <section id="messagesPublic"></section>
-    <section id="clientsList"></section>
-    <section id="saisiePrivate">
-        <textarea id="textPrivate"></textarea>
-        <button id="sendPrivate"></button>
+    <section id="messagesPublic" class="mb-4"></section>
+    <section id="clientsList" class="mb-4"></section>
+    <section id="saisiePrivate" class="mb-4">
+        <textarea id="textPrivate" class="form-control mb-3"></textarea>
+        <div class="text-center">
+            <button id="sendPrivate" class="btn btn-primary"></button>
+        </div>
     </section>
     <section id="messagesPrivate"></section>
 

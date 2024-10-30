@@ -1,16 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js" defer></script>
 </head>
-<body>
-    <h1>Bienvenue</h1>
+
+<body class="m-5">
+    <h1 class="text-center">Welcome to chat</h1>
     <form action="chat.html" method="get">
-        <div><input type="text" name="pseudo"></div>
-        <div><input type="password" name="pwd"></div>
-        <div><input type="submit" value="Connecte-toi"></div>
+        <label class="form-label">Nickname:</label>
+        <div><input type="text" name="pseudo" class="form-control"></div>
+
+        <label class="form-label">Password:</label>
+        <div><input type="password" name="pwd" class="form-control"></div>
+        
+        <div class="text-center">
+            <div><input type="submit" class="btn btn-primary m-2" value="Connect"></div>
+        </div>
     </form>
 </body>
+
 </html>
