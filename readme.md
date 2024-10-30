@@ -1,6 +1,7 @@
  # Real-Time Chat App 💬
 Welcome to Real-Time Chat App! 🎉 This is a collaborative project developed during my CSI training. This app is a Node.js-based chat platform where users can register and send public messages to each other in real-time. Built with Node.js, Express, and TinyMCE for rich text editing, this chat app showcases core web development concepts and real-time messaging! 🚀
 
+<img src="./assets/img/image-chat.png" alt="Image chat" width="300" height="250"> 
 ## Features 🌟
 - User Registration 🔑 - Create your profile and join the conversation.
 - Public Chat 💬 - Message with everyone in real-time!
