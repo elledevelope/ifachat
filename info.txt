@@ -36,3 +36,179 @@ nodemon https://www.npmjs.com/package/nodemon
 https://cdnjs.com/libraries/socket.io   => <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.8.1/socket.io.min.js" integrity="sha512-8ExARjWWkIllMlNzVg7JKq9RKWPlJABQUNq6YvAjE/HobctjH/NA+bSiDMDvouBVjp4Wwnf1VP1OEv7Zgjtuxw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 for Date - moment.js   https://momentjs.com/
 https://www.npmjs.com/package/moment
+
+
+index.js:
+
+
+const express = require("express");
+const http = require('http');
+const app = express();
+const server = http.Server(app);
+const io = require('socket.io')(server);
+//172.20.192.227
+
+const ip = "127.0.0.1";
+const port = 4000;
+app.use(express.static('public'));
+app.get('/', (req, res) => {
+    res.sendFile('index.html', { root: __dirname });
+});
+// un tableau pour suivre mes utilisateurs actifs
+const users = [];
+const publicMessages = [];
+
+//............................................................. SERVER-SIDE :
+
+// ------------------ getting "updateUserList" from the client = script.js
+const updateUserList = () => {
+    io.emit("updateUserList", users);
+};
+
+io.on("connection", (socket) => {
+
+    socket.emit("init", { message: "Bienvenue cher client du chat" })
+
+    // ------------------ attente de l'emit sendLog from the client = script.js
+    socket.on("sendLog", (data) => {
+        //console.log(socket.id);
+        // TO ADD HERE LATER: -------- sécurisation par authenticator ...
+        data.id = socket.id;
+        users.push(data);
+        //console.dir(users);
+        updateUserList();
+    });
+
+    // ------------------ publicMessage
+    socket.on("publicMessage", (data) => {
+        data.id = socket.id;
+        publicMessages.push(data);
+        //console.dir(publicMessages);
+        socket.broadcast.emit("publicMessageGlobal", data);
+    });
+
+    // ------------------ remove the disconnected user
+    socket.on("disconnect", () => {
+        //socket.id
+        // let indexDisconnect;
+        // users.forEach((element, index) => {
+        //     if (element.id === socket.id) {
+        //         indexDisconnect = index;
+        //     };
+        // });
+        // // splice sert à supprimer une entrée de tableau à partir de son index (indexDisconnect)
+        // users.splice(indexDisconnect, 1);
+        // console.dir(users);
+
+        const indexDisconnect = users.findIndex((user) => user.id === socket.id);
+
+        // if the user is found, remove them
+        if (indexDisconnect !== -1) {
+            // splice sert à supprimer une entrée de tableau à partir de son index (indexDisconnect)
+            users.splice(indexDisconnect, 1);
+        };
+    });
+});
+
+
+server.listen(port, ip, () => {
+    console.log("Démarrer sur http://" + ip + ":" + port);
+});
+
+
+
+script.js:
+// declaration de variables
+const sendPublic = document.querySelector("#sendPublic");
+const messagesPublic = document.getElementById("messagesPublic");
+const socket = io();
+const query = window.location.search;
+const urlParams = new URLSearchParams(query);
+const pseudo = urlParams.get("pseudo");
+console.log(pseudo);
+const pwd = urlParams.get("pwd");
+console.log(pwd);
+
+// declarations de fonction
+const displayMessage = (data) => {
+    messagesPublic.innerHTML += `
+    <div class="newMessage">
+        <h2>${data.pseudo}</h2>
+        <p class="content">${data.messageContent}</p>
+        <p class="date">${data.date}</p>
+    </div>`
+};
+
+tinymce.init({
+    selector: '#textPublic',
+    plugins: [
+        'advlist', 'autolink',
+        'lists', 'link', 'image', 'charmap', 'preview', 'anchor', 'searchreplace', 'visualblocks',
+        'fullscreen', 'insertdatetime', 'media', 'table', 'help', 'wordcount'
+    ],
+    toolbar: 'undo redo | formatpainter casechange blocks | bold italic backcolor | ' +
+        'alignleft aligncenter alignright alignjustify | ' +
+        'bullist numlist checklist outdent indent | removeformat | a11ycheck code table help'
+});
+
+// ///////////////--------------------------- Users-currently-online-list : 
+// const renderUserList = (users) => {
+//     userList.innerHTML = ""; // start with empty list of users
+//     users.forEach((user) => {
+//         const userElement = document.createElement("li");
+//         userElement.textContent = user.pseudo;
+//         userList.appendChild(userElement);
+//     });
+//     // console.log(users.pseudo);
+// };
+
+// ///////////////--------------------------- Receive the updated users list :
+// socket.on("updateUserList", (users) => {
+//     renderUserList(users);
+// });
+
+///////////////--------------------------- Create users-currently-online-list : 
+const renderUserList = (users) => {
+    userList.innerHTML = ""; // start with an empty list of users
+
+    users.forEach((user) => {
+        const userElement = document.createElement("p");
+        userElement.textContent = user.pseudo;
+        userElement.setAttribute("onclick", `displaySomething('${user.id}')`);
+        userList.appendChild(userElement);
+    });
+};
+
+///////////////--------------------------- updated users list :
+socket.on("updateUserList", (users) => {
+    renderUserList(users);
+});
+
+// Example function to handle the onclick event
+function displaySomething(socketId) {
+    console.log("Clicked user with socket ID:", socketId);
+    // Additional logic for clicking on a user can go here
+}
+
+socket.on("init", (data) => {
+    console.dir(data);
+    socket.emit("sendLog", {
+        pseudo: pseudo,
+        pwd: pwd
+    });
+});
+
+sendPublic.addEventListener("click", () => {
+    let messageContent = tinyMCE.get("textPublic").getContent();
+    let date = new Date();//UTC ou https://momentjs.com/
+    // envoie du message public au server
+    let data = { pseudo: pseudo, messageContent: messageContent, date: date }
+    socket.emit("publicMessage", data);
+    displayMessage(data);
+});
+
+
+socket.on("publicMessageGlobal", (data) => {
+    console.dir(data);
+    displayMessage(data);
+});
