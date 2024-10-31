@@ -73,16 +73,16 @@ document.getElementById("sendPrivate").addEventListener("click", () => {
     const date = new Date();
 
     const data = { recipient, pseudo, messageContent, date };
-    socket.emit("privateMessage", data); // Emit the private message to server
-    document.getElementById("privateMessagePopup").style.display = "none"; // Close popup
+    socket.emit("privateMessage", data); 
+    document.getElementById("privateMessagePopup").style.display = "none";
     tinyMCE.get("privateMessageText").setContent(""); // Clear TinyMCE content
 });
 
 
 // Close popup overlay :
 document.getElementById("closePopup").addEventListener("click", () => {
-    document.getElementById("privateMessagePopup").style.display = "none"; // Close popup
-    tinyMCE.get("privateMessageText").setContent(""); // Clear TinyMCE content when closing
+    document.getElementById("privateMessagePopup").style.display = "none"; 
+    tinyMCE.get("privateMessageText").setContent(""); 
 });
 
 
@@ -90,16 +90,10 @@ document.getElementById("closePopup").addEventListener("click", () => {
 socket.on("receivePrivateMessage", (data) => {
     const incomingMessagesDiv = document.getElementById("incomingMessages");
 
-
-    // Create a new message element
     const messageElement = document.createElement("div");
     messageElement.classList.add("incoming-message");
     messageElement.innerHTML = `<p><strong> You received DM from ${data.pseudo}</strong>: ${data.messageContent}</p>`;
-
-    // Append the new message to the incoming messages div
     incomingMessagesDiv.appendChild(messageElement);
-
-    // Optionally, ensure the popup is displayed when a new message arrives
     incomingMessagesDiv.style.display = "block";
 });
 
